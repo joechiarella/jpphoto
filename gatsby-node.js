@@ -104,3 +104,25 @@ exports.sourceNodes = async ({
     })
   }
 };
+
+exports.createPages = async function({ actions, graphql }) {
+  const { data } = await graphql(`
+    query {
+      allCloudinaryFolder {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `)
+  data.allCloudinaryFolder.edges.forEach(edge => {
+    const slug = edge.node.slug
+    actions.createPage({
+      path: slug,
+      component: require.resolve(`./src/templates/gallery.js`),
+      context: { slug: slug },
+    })
+  })
+}
