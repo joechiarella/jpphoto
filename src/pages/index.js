@@ -1,20 +1,35 @@
-import React from "react"
+import { React, useCallback } from "react"
 import Layout from "../components/layout"
-import { Link, graphql } from 'gatsby'
+import { Link, graphql, navigate } from 'gatsby'
+import Gallery from "react-photo-gallery";
 
-export default ({ data }) => (
+function Index({ data }) { 
+  console.log("data", data.allCloudinaryFolder.edges)
+  const photos = data.allCloudinaryFolder.edges.map(({ node }) => {
+    const imgNode = data.allCloudinaryImage.edges.find(edge => edge.node.folder===node.name).node
+    return {
+      src: imgNode.thumb,
+      width: imgNode.width,
+      height: imgNode.height,
+      slug: node.slug
+    }
+  })
+  
+  const nav = useCallback((event, { photo, index }) => {
+    console.log("photo", photo)
+    navigate(`/${photo.slug}/`)
+  }, []);
+  
+
+  return (
   <Layout>
     <h1>Concert Photography</h1>
-    {data.allCloudinaryFolder.edges.map(({ node }, index) => (
-              <div key={node.name}>
-                 <Link to={node.slug} >
-                { node.name }
-                <img src={ data.allCloudinaryImage.edges.find(edge => edge.node.folder===node.name).node.thumb}/>
-               </Link>
-              </div>
-            ))}
+
+    <Gallery photos={photos} onClick={nav} targetRowHeight={500}/>  
   </Layout>
 )
+}
+export default Index
 
 export const query = graphql`
   query {
@@ -31,6 +46,8 @@ export const query = graphql`
         node {
           folder
           thumb
+          width
+          height
         }
       }
     }

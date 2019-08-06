@@ -40,7 +40,7 @@ exports.sourceNodes = async ({
   const processMediaItem = (image, folder) => {
     const nodeId = createNodeId(`cloudinary-image-${image.public_id}`);
     const orientation = getImageOrientation(image.width, image.height);
-    const thumb = `https://res.cloudinary.com/${cloudName}/image/upload/w_600/v${image.version}/${image.public_id}.${image.format}`;
+    const thumb = `https://res.cloudinary.com/${cloudName}/image/upload/h_600/v${image.version}/${image.public_id}.${image.format}`;
     const imgUrl = orientation === 'portrait' ? `https://res.cloudinary.com/${cloudName}/image/upload/h_1200/v${image.version}/${image.public_id}.${image.format}` : `https://res.cloudinary.com/${cloudName}/image/upload/w_1200/v${image.version}/${image.public_id}.${image.format}`;
     const imageData = Object.assign({
       folder,
@@ -121,7 +121,7 @@ exports.createPages = async function({ actions, graphql }) {
     const slug = edge.node.slug
     actions.createPage({
       path: slug,
-      component: require.resolve(`./src/templates/gallery.js`),
+      component: require.resolve(`./src/templates/photoGallery.js`),
       context: { slug: slug },
     })
   })
