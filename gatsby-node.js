@@ -61,10 +61,26 @@ exports.sourceNodes = async ({
     });
     return nodeData;
   };
+  const coverParams = {
+    resource_type: `image`,
+    max_results: 500
+  }
 
-  const folderResponse = await cloudinary.v2.api.root_folders((error, result) => result);
-  console.log("FOLDERS", folderResponse)
-  const { folders } = folderResponse
+  const getFolderName = (public_id) => {
+    return public_id.substr(0, public_id.indexOf('/')); 
+  }
+
+  const coverResponse = await cloudinary.v2.api.resources_by_tag("cover", coverParams, (error, result) => result);
+  console.log("COVERS", coverResponse)
+  
+  const folders = coverResponse.resources.map(resource => {
+    return {
+      created_at: resource.created_at,
+      name: getFolderName(resource.public_id)
+    }
+  })
+
+  console.log("FOLDERS", folders)
 
   for (const folder of folders) {
     queryParams.prefix = folder.name;
@@ -98,7 +114,6 @@ exports.sourceNodes = async ({
       slug: slugify(folder.name),
       internal: {
         type: `CloudinaryFolder`,
-        content: JSON.stringify(folderData),
         contentDigest: createContentDigest(folderData)
       }
     })
