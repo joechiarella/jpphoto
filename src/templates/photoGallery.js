@@ -30,7 +30,7 @@ function PhotoGallery({data}) {
 
   return (
     <Layout>
-    <Gallery photos={photos} onClick={openLightbox} targetRowHeight={500}/>
+    <Gallery photos={photos} onClick={openLightbox} targetRowHeight={500} margin={1}/>
     <ModalGateway>
         {viewerIsOpen ? (
           <Modal onClose={closeLightbox}>

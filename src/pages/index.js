@@ -5,15 +5,21 @@ import Gallery from "react-photo-gallery";
 
 function Index({ data }) { 
   console.log("data", data.allCloudinaryFolder.edges)
-  const photos = data.allCloudinaryFolder.edges.map(({ node }) => {
-    const imgNode = data.allCloudinaryImage.edges.find(edge => edge.node.folder===node.name).node
-    return {
-      src: imgNode.thumb,
-      width: imgNode.width,
-      height: imgNode.height,
-      slug: node.slug
-    }
+  const photos = data.allCloudinaryFolder.edges.flatMap(({ node }) => {
+    const coverImages = data.allCloudinaryImage.edges.filter(edge => edge.node.folder===node.name)
+    
+    return coverImages.map(image => {
+      const imgNode = image.node
+      return {
+        src: imgNode.thumb,
+        width: imgNode.width,
+        height: imgNode.height,
+        slug: node.slug
+      }
+    })
   })
+
+  console.log("COVER IMAGES", photos)
   
   const nav = useCallback((event, { photo, index }) => {
     console.log("photo", photo)
