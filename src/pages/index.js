@@ -29,8 +29,6 @@ function Index({ data }) {
 
   return (
   <Layout>
-    <h1>Concert Photography</h1>
-
     <Gallery photos={photos} onClick={nav} targetRowHeight={500}/>  
   </Layout>
 )

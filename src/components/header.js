@@ -1,3 +1,47 @@
 import React from "react"
+import { useStaticQuery, Link, graphql } from "gatsby"
+import { css } from "@emotion/core"
 
-export default props => <h1>{props.headerText}</h1>
+export default props => {
+  const data = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            title
+          }
+        }
+      }
+    `
+  )
+  return <div css={css`
+      display: flex; 
+      align-items: baseline;
+    `}>
+    <Link to={`/`} css={css`
+        text-decoration: none;
+        font-style: normal;
+        font-size: 2.5em;
+        margin: 0.2em;
+        `}>
+      {data.site.siteMetadata.title}
+    </Link>
+    <Link
+      to={`/about/`}
+      css={css`
+        margin-left: 3em;
+        font-size: 1.5em;
+        text-decoration: none;
+      `}
+      >
+      About
+    </Link>
+    <div css={css`
+      flex-grow: 1;
+      text-align: right;
+      font-size: 1.5em;
+      `}>
+      joe@josephpatrickphoto.com // ATL
+    </div>
+  </div>
+}

@@ -1,43 +1,19 @@
 import React from "react"
 import { css } from "@emotion/core"
-import { useStaticQuery, Link, graphql } from "gatsby"
+import Header from "./header"
+import {Helmet} from "react-helmet";
 
 export default ({ children }) => {
-  const data = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-          }
-        }
-      }
-    `
-  )
   return (
     <div
       css={css`
         margin: 0 auto;
       `}
     >
-      <Link to={`/`}>
-        <h3
-          css={css`
-            display: inline-block;
-            font-style: normal;
-          `}
-        >
-          {data.site.siteMetadata.title}
-        </h3>
-      </Link>
-      <Link
-        to={`/about/`}
-        css={css`
-          float: right;
-        `}
-      >
-        About
-      </Link>
+      <Helmet>
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet"/>
+      </Helmet>
+      <Header/>
       {children}
     </div>
   )
