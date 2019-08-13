@@ -2,6 +2,7 @@ import { React, useCallback } from "react"
 import Layout from "../components/layout"
 import { Link, graphql, navigate } from 'gatsby'
 import Gallery from "react-photo-gallery";
+import ImageRenderer from "../components/imageRenderer"
 
 function Index({ data }) { 
   console.log("data", data.allCloudinaryFolder.edges)
@@ -21,15 +22,28 @@ function Index({ data }) {
 
   console.log("COVER IMAGES", photos)
   
-  const nav = useCallback((event, { photo, index }) => {
-    console.log("photo", photo)
+  const nav = useCallback((event, { photo }) => {
     navigate(`/${photo.slug}/`)
   }, []);
+
+  const imageRenderer = useCallback(
+    ({ left, top, key, photo, onClick }) => (
+      <ImageRenderer
+        key={key}
+        margin={"1px"}
+        photo={photo}
+        left={left}
+        top={top}
+        onClick={onClick}
+      />
+    ),
+    []
+  );
   
 
   return (
   <Layout>
-    <Gallery photos={photos} onClick={nav} targetRowHeight={500}/>  
+    <Gallery photos={photos} onClick={nav} targetRowHeight={500} renderImage={imageRenderer} />  
   </Layout>
 )
 }

@@ -3,6 +3,7 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Gallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
+import { css } from "@emotion/core"
 
 function PhotoGallery({data}) {
   const [currentImage, setCurrentImage] = useState(0);
@@ -30,21 +31,29 @@ function PhotoGallery({data}) {
 
   return (
     <Layout>
-    <Gallery photos={photos} onClick={openLightbox} targetRowHeight={500} margin={1}/>
-    <ModalGateway>
-        {viewerIsOpen ? (
-          <Modal onClose={closeLightbox}>
-            <Carousel
-              currentIndex={currentImage}
-              views={photos.map(x => ({
-                ...x,
-                src: x.full,
-                caption: x.title
-              }))}
-            />
-          </Modal>
-        ) : null}
-      </ModalGateway>
+      <div css={css`
+        text-decoration: none;
+        font-style: normal;
+        font-size: 2.0em;
+        margin: 0.2em;
+        `}>
+        {folder.name}
+      </div>
+      <Gallery photos={photos} onClick={openLightbox} targetRowHeight={500} margin={1}/>
+      <ModalGateway>
+          {viewerIsOpen ? (
+            <Modal onClose={closeLightbox}>
+              <Carousel
+                currentIndex={currentImage}
+                views={photos.map(x => ({
+                  ...x,
+                  src: x.full,
+                  caption: x.title
+                }))}
+              />
+            </Modal>
+          ) : null}
+        </ModalGateway>
     </Layout>
   )
 }
@@ -59,6 +68,7 @@ export const query = graphql`
         height
         imgUrl
       }
+      name
     }
   }
 `
