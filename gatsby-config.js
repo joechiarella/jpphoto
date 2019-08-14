@@ -9,8 +9,6 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-emotion`,
-    'gatsby-transformer-sharp',
-    'gatsby-plugin-react-helmet',
-    'gatsby-plugin-sharp'
+    'gatsby-plugin-react-helmet'
   ],
 };
