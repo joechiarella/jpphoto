@@ -1,6 +1,6 @@
 import { React, useCallback } from "react"
 import Layout from "../components/layout"
-import { Link, graphql, navigate } from 'gatsby'
+import { graphql, navigate } from 'gatsby'
 import Gallery from "react-photo-gallery";
 import ImageRenderer from "../components/imageRenderer"
 
@@ -15,7 +15,8 @@ function Index({ data }) {
         src: imgNode.thumb,
         width: imgNode.width,
         height: imgNode.height,
-        slug: node.slug
+        slug: node.slug,
+        folder: imgNode.folder
       }
     })
   })

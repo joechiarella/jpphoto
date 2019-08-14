@@ -9,6 +9,7 @@ export default props => {
         site {
           siteMetadata {
             title
+            email
           }
         }
       }
@@ -41,7 +42,8 @@ export default props => {
       text-align: right;
       font-size: 1.5em;
       `}>
-      joe@josephpatrickphoto.com // ATL
+        {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
+      {data.site.siteMetadata.email} // ATL
     </div>
   </div>
 }
