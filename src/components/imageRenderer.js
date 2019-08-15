@@ -18,6 +18,10 @@ const ImageRenderer = ({
 
   const [isMouseOver, setMouseOver] = useState(false);
   const props = useSpring({
+    config: {
+      tension: 500,
+      clamp: true
+    },
     opacity: isMouseOver ? 1 : 0, 
     from: {
       opacity: isMouseOver ? 0 : 1

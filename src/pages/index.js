@@ -3,6 +3,8 @@ import Layout from "../components/layout"
 import { graphql, navigate } from 'gatsby'
 import Gallery from "react-photo-gallery";
 import ImageRenderer from "../components/imageRenderer"
+import {useTransition, animated, config} from 'react-spring'
+
 
 function Index({ data }) { 
   console.log("data", data.allCloudinaryFolder.edges)
@@ -27,24 +29,45 @@ function Index({ data }) {
     navigate(`/${photo.slug}/`)
   }, []);
 
+  const transitions = useTransition(photos, item => item.src, {
+    config: config.default,
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    trail: 80
+    })
+
   const imageRenderer = useCallback(
-    ({ left, top, key, photo, onClick }) => (
-      <ImageRenderer
-        key={key}
-        margin={"1px"}
-        photo={photo}
-        left={left}
-        top={top}
-        onClick={onClick}
-      />
-    ),
-    []
+    ({ left, top, key, photo, onClick }) => {
+      console.log("TCL: transitions", transitions)
+      const trans = transitions.find(trans => trans.item.src === photo.src)
+      console.log("TCL: trans", trans)
+      return <animated.div style={trans.props}>
+          <ImageRenderer
+            key={key}
+            margin={"1px"}
+            photo={photo}
+            left={left}
+            top={top}
+            onClick={onClick}
+            />
+        </animated.div>
+    },
+    [transitions]
   );
+  
+  
+
   
 
   return (
   <Layout>
-    <Gallery photos={photos} onClick={nav} targetRowHeight={400} renderImage={imageRenderer} />  
+    <Gallery 
+      photos={photos} 
+      onClick={nav} 
+      // targetRowHeight={400} 
+      renderImage={imageRenderer} 
+      limitNodeSearch={30}
+    />  
   </Layout>
 )
 }
