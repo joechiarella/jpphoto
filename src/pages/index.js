@@ -44,7 +44,7 @@ function Index({ data }) {
 
   return (
   <Layout>
-    <Gallery photos={photos} onClick={nav} targetRowHeight={500} renderImage={imageRenderer} />  
+    <Gallery photos={photos} onClick={nav} targetRowHeight={400} renderImage={imageRenderer} />  
   </Layout>
 )
 }

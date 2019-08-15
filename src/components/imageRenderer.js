@@ -1,6 +1,8 @@
 import { React, useState } from "react"
 import { Link } from 'gatsby'
 import { css } from "@emotion/core"
+import {useSpring, animated} from 'react-spring'
+
 
 const cont = {
   backgroundColor: "#eee",
@@ -15,6 +17,13 @@ const ImageRenderer = ({
 }) => {
 
   const [isMouseOver, setMouseOver] = useState(false);
+  const props = useSpring({
+    opacity: isMouseOver ? 1 : 0, 
+    from: {
+      opacity: isMouseOver ? 0 : 1
+    }
+  })
+
   
   console.log("TCL: photo", photo)
 
@@ -30,7 +39,8 @@ const ImageRenderer = ({
         {...photo}
         
         />
-      {isMouseOver && <div css={css`
+      <animated.div style={props}
+        css={css`
         position: absolute; 
         bottom: 0px; 
         left: 0; 
@@ -45,7 +55,7 @@ const ImageRenderer = ({
           }>
           {photo.folder}
         </span>
-      </div> }
+      </animated.div>
     </div>
     </Link>
   );
