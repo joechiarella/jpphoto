@@ -13,7 +13,8 @@ const cont = {
 
 const ImageRenderer = ({
   photo,
-  margin
+  margin,
+  onClick
 }) => {
 
   const [isMouseOver, setMouseOver] = useState(false);
@@ -28,15 +29,12 @@ const ImageRenderer = ({
     }
   })
 
-  
-  console.log("TCL: photo", photo)
-
   return (
-    <Link to={photo.slug}>
     <div
       style={{ margin, height: photo.height, width: photo.width, ...cont }}
       onMouseEnter={() => { setMouseOver(true) }}
       onMouseLeave={() => { setMouseOver(false) }}
+      onClick={onClick}
       >
       <img
         alt={photo.title}
@@ -61,7 +59,6 @@ const ImageRenderer = ({
         </span>
       </animated.div>
     </div>
-    </Link>
   );
 };
 

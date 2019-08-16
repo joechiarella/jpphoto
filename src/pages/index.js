@@ -1,13 +1,10 @@
 import { React, useCallback } from "react"
 import Layout from "../components/layout"
 import { graphql, navigate } from 'gatsby'
-import Gallery from "react-photo-gallery";
-import ImageRenderer from "../components/imageRenderer"
-import {useTransition, animated, config} from 'react-spring'
+import GridGallery from "../components/gridGallery"
 
 
-function Index({ data }) { 
-  console.log("data", data.allCloudinaryFolder.edges)
+function Index({ data }) {
   const photos = data.allCloudinaryFolder.edges.flatMap(({ node }) => {
     const coverImages = data.allCloudinaryImage.edges.filter(edge => edge.node.folder===node.name)
     
@@ -23,50 +20,15 @@ function Index({ data }) {
     })
   })
 
-  console.log("COVER IMAGES", photos)
-  
-  const nav = useCallback((event, { photo }) => {
+  const nav = (photo, index) => {
     navigate(`/${photo.slug}/`)
-  }, []);
-
-  const transitions = useTransition(photos, item => item.src, {
-    config: config.default,
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    trail: 80
-    })
-
-  const imageRenderer = useCallback(
-    ({ left, top, key, photo, onClick }) => {
-      console.log("TCL: transitions", transitions)
-      const trans = transitions.find(trans => trans.item.src === photo.src)
-      console.log("TCL: trans", trans)
-      return <animated.div style={trans.props}>
-          <ImageRenderer
-            key={key}
-            margin={"1px"}
-            photo={photo}
-            left={left}
-            top={top}
-            onClick={onClick}
-            />
-        </animated.div>
-    },
-    [transitions]
-  );
-  
-  
-
-  
+  }
 
   return (
   <Layout>
-    <Gallery 
+    <GridGallery 
       photos={photos} 
-      onClick={nav} 
-      // targetRowHeight={400} 
-      renderImage={imageRenderer} 
-      limitNodeSearch={30}
+      onClick={nav}
     />  
   </Layout>
 )

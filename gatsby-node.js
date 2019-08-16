@@ -94,12 +94,8 @@ exports.sourceNodes = async ({
   } = actions;
 
   const covers = await getCoverImages()
-  console.log("COVERS", covers)
  
   const folders = getFolders(covers)
-
-  console.log("FOLDERS", folders)
-
 
   for (const folder of folders) {
     const folderMediaItems = await getImagesForFolder(folder.name)

@@ -1,7 +1,7 @@
 import { React, useState, useCallback } from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
-import Gallery from "react-photo-gallery";
+import GridGallery from "../components/gridGallery"
 import Carousel, { Modal, ModalGateway } from "react-images";
 import { css } from "@emotion/core"
 
@@ -9,7 +9,7 @@ function PhotoGallery({data}) {
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
-  const openLightbox = useCallback((event, { photo, index }) => {
+  const openLightbox = useCallback((photo, index ) => {
     setCurrentImage(index);
     setViewerIsOpen(true);
   }, []);
@@ -39,7 +39,10 @@ function PhotoGallery({data}) {
         `}>
         {folder.name}
       </div>
-      <Gallery photos={photos} onClick={openLightbox} targetRowHeight={400} margin={1}/>
+      <GridGallery 
+        photos={photos} 
+        onClick={openLightbox}
+      />  
       <ModalGateway>
           {viewerIsOpen ? (
             <Modal onClose={closeLightbox}>
