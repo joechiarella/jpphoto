@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: 'Joseph Patrick Photography',
@@ -7,6 +11,12 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-emotion`,
-    'gatsby-plugin-react-helmet'
+    'gatsby-plugin-react-helmet',
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: `${process.env.GA_KEY}`
+      },
+    }
   ],
 };
