@@ -1,4 +1,4 @@
-import { React, useCallback } from "react"
+import { React } from "react"
 import Layout from "../components/layout"
 import { graphql, navigate } from 'gatsby'
 import GridGallery from "../components/gridGallery"
