@@ -24,11 +24,16 @@ function Index({ data }) {
     navigate(`/${photo.slug}/`)
   }
 
+  const overlay = (photo) => {
+    return photo.folder
+  }
+
   return (
   <Layout>
     <GridGallery 
       photos={photos} 
       onClick={nav}
+      overlay={overlay}
     />  
   </Layout>
 )

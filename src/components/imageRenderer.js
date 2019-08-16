@@ -14,7 +14,8 @@ const cont = {
 const ImageRenderer = ({
   photo,
   margin,
-  onClick
+  onClick,
+  overlay
 }) => {
 
   const [isMouseOver, setMouseOver] = useState(false);
@@ -41,7 +42,7 @@ const ImageRenderer = ({
         {...photo}
         
         />
-      <animated.div style={props}
+      { overlay && <animated.div style={props}
         css={css`
         position: absolute; 
         bottom: 0px; 
@@ -55,9 +56,9 @@ const ImageRenderer = ({
           background: rgba(0, 0, 0, 0.4);
           padding: 0.2em; `
           }>
-          {photo.folder}
+          {overlay(photo)}
         </span>
-      </animated.div>
+        </animated.div> }
     </div>
   );
 };

@@ -3,7 +3,7 @@ import Gallery from "react-photo-gallery";
 import {useTransition, animated, config} from 'react-spring'
 import ImageRenderer from './imageRenderer'
 
-function GridGallery({ photos, onClick }) {
+function GridGallery({ photos, onClick, overlay }) {
 
   
   const transitions = useTransition(photos, item => item.src, {
@@ -24,6 +24,7 @@ function GridGallery({ photos, onClick }) {
             left={left}
             top={top}
             onClick={() => {onClick(photo, index)}}
+            overlay={overlay}
             />
         </animated.div>
     },
